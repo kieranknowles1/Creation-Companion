@@ -1,4 +1,4 @@
-﻿using System.Reactive.Linq;
+using System.Reactive.Linq;
 using Autofac;
 using CommandLine;
 using CreationEditor.Services.Environment;
@@ -60,7 +60,9 @@ public record CommandLineEntryPointVoiceSheets : ICommandLineEntryPoint, IDataSo
                     var writeXlsx = container.Resolve<WriteXlsx>();
                     var currentMod = editorEnvironment.LinkCache.PriorityOrder.First(l => l.ModKey.FileName == cmd.ModFilename);
                     var lines = exportVoiceSheets.GetLines(currentMod, cmd.IncludeAlreadyVoiced);
-                    writeXlsx.Write(lines, cmd.OutputDirectory);
+                    var writeCsv = new WriteCsv(cmd);
+                    writeCsv.Write(lines.ToList());
+                    //writeXlsx.Write(lines, cmd.OutputDirectory);
                     return 0;
                 },
                 _ => Task.FromResult(-1))

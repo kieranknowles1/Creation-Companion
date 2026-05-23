@@ -90,7 +90,7 @@ public class ExportVoiceSheets(
                                     scene,
                                     sceneAction,
                                     speaker.Replace('\"', '\''),
-                                    context.Replace('\"', '\''),
+                                    context.Replace('\"', '\'').Replace("\n", ", "),
                                     response.Text.String?.Replace('\"', '\'') ?? "",
                                     response.ScriptNotes.Replace('\"', '\''),
                                     response.Emotion + " " + response.EmotionValue,
